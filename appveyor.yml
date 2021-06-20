@@ -19,7 +19,7 @@ install:
   - git config --global user.email "mycatisagoodboi@gmail.com"
   - git config --global user.name "Derpy-Jacob-903"
   - git clone $SRC_REPO /home/appveyor/src
-  - git revert master~17..master~3
+  - git revert master~19..master~5
 build_script:
   - git add --all
   - git commit -m "revert to v0.2-e-2"
