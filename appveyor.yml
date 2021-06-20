@@ -19,6 +19,6 @@ install:
   - git config --global user.email "mycatisagoodboi@gmail.com"
   - git config --global user.name "Derpy-Jacob-903"
   - git clone $SRC_REPO /home/appveyor/src
-  - git revert -m 1 --no-edit master~20..master~6
+  - git revert -n -m 1 --no-edit master~21..master~7
 build_script:
   - git push
