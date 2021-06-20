@@ -9,13 +9,13 @@ clone_folder: /home/appveyor/site
 environment:
   HAXELIB_ROOT: /home/appveyor/haxelib
   HAXE_INSTALLDIR: /home/appveyor/haxe
-  SRC_REPO: https://github.com/Upland-Mutton-903/ProjectFNF/.git
+  SRC_REPO: https://github.com/Upland-Mutton-903/ProjectFNF.git
   GITHUB_ACCESS_TOKEN:
     secure: AYoRbFDfZVEdfVVzZFuz5wJXJkAEOOkHtgAweikYp3tqImQUhwg2P6dCjyPxEF7o
 
 install:
   - git clone $SRC_REPO /home/appveyor/src
-  - git revert master~15..master~1
+  - git revert master~17..master~3
 build_script:
   - git add --all
   - git commit -m "revert to v0.2-e-2"
