@@ -1500,14 +1500,16 @@ class PlayState extends MusicBeatState
 	{
 		if (paused)
 		{
-			if (FlxG.sound.music != null && !startingSong)
-			{
-				resyncVocals();
-			}
 
-			if (!startTimer.finished)
-				startTimer.active = true;
-			paused = false;
+			// ITS 1:49 AM IOM SO FIUCKING TIREEDDD
+			if (FlxG.sound.music != null && !startingSong)
+				{
+					resyncVocals();
+				}
+	
+				if (!startTimer.finished)
+					startTimer.active = true;
+				paused = false;
 
 			#if desktop
 			if (startTimer.finished)
@@ -1980,11 +1982,7 @@ class PlayState extends MusicBeatState
 					{
 						daNote.visible = false;
 					}
-					if (FlxG.save.data.betanotestrums) {
-						daNote.x = strumLineNotes.members[noteNum].x;
-					} else {
-						daNote.x = strumLineNotes.members[noteNum].x + 30;
-					}
+					daNote.x = strumLineNotes.members[noteNum].x;
 				}
 
 				if (daNote.tooLate)
@@ -2913,7 +2911,7 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
+		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20 && !paused)
 		{
 			resyncVocals();
 		}
