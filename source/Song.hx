@@ -7,6 +7,12 @@ import lime.utils.Assets;
 
 using StringTools;
 
+
+typedef ModchartInfo = {
+	var circle:Bool;
+	var swap:Bool;
+}
+
 typedef SwagSong =
 {
 	var song:String;

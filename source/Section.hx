@@ -9,6 +9,14 @@ typedef SwagSection =
 	var bpm:Int;
 	var changeBPM:Bool;
 	var altAnim:Bool;
+	var circle:Bool;
+	var fadeout:Bool;
+	var bounce:Bool;
+	var cancel:Bool;
+	var fadein:Bool;
+	var camerabounce:Bool;
+	var cameracancel:Bool;
+	var cameraflip:Bool;
 }
 
 class Section

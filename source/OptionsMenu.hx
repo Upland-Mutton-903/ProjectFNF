@@ -32,7 +32,7 @@ class OptionsMenu extends MusicBeatState
 
 	var notetypes = [
 		"NOTE", "TRIANGLE", "CIRCLE", "BEATSABER", "STEPMANIA", "ETTERNA", "SPOOKY", "VAPORWAVE", "HELLBEATS", "WAFELS3", "NEO", "SOFT", "TRANSPARENT",
-		"SPLASH"
+		"SPLASH", "ITG"
 	];
 	var noteselection = 69; // funny number
 
@@ -60,33 +60,94 @@ class OptionsMenu extends MusicBeatState
 
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
-		controlsStrings[controlsStrings.length + 1] = "setCustomize Keybinds";
+		controlsStrings[controlsStrings.length] = "setCustomize Keybinds"; // I HAVE SEVERE AUTISM LOOODALOFDALK
 		for (i in 0...controlsStrings.length)
 		{
 			switch (controlsStrings[i].substring(3).split(" || ")[0])
 			{
 				case "Ghost Tapping":
-					if (!FlxG.save.data.ghosttapping)
+					if (FlxG.save.data.ghosttapping == null) {
+						trace("Some data's null around here :nerd:");
 						FlxG.save.data.ghosttapping = controlsStrings[curSelected].split(" || ")[2];
+					}
 				case "Downscroll":
-					if (!FlxG.save.data.downscroll)
+					if (FlxG.save.data.downscroll == null)
 						FlxG.save.data.downscroll = controlsStrings[curSelected].split(" || ")[2];
 				case "Miss Shake":
-					if (!FlxG.save.data.missshake)
+					if (FlxG.save.data.missshake == null)
 						FlxG.save.data.missshake = controlsStrings[curSelected].split(" || ")[2];
 				case "Dad Notes Visible":
-					if (!FlxG.save.data.dadnotesvisible)
+					if (FlxG.save.data.dadnotesvisible == null)
 						FlxG.save.data.dadnotesvisible = controlsStrings[curSelected].split(" || ")[2];
 				case "Enable Miss Animations":
-					if (!FlxG.save.data.enablemissanimations)
+					if (FlxG.save.data.enablemissanimations == null)
 						FlxG.save.data.enablemissanimations = controlsStrings[curSelected].split(" || ")[2];
+				case "Optimized Notes":
+					if (FlxG.save.data.squarenotes == null)
+						FlxG.save.data.squarenotes = controlsStrings[curSelected].split(" || ")[2];
+				case "Advanced Info Bar":
+					if (FlxG.save.data.advancedinfobar == null)
+						FlxG.save.data.advancedinfobar = controlsStrings[curSelected].split(" || ")[2];
 				case "Bot Play":
-					if (!FlxG.save.data.botplay)
+					if (FlxG.save.data.botplay == null)
 						FlxG.save.data.botplay = controlsStrings[curSelected].split(" || ")[2];
+				case "Hit Sounds":
+					if (FlxG.save.data.hitsounds == null)
+						FlxG.save.data.hitsounds = controlsStrings[curSelected].split(" || ")[2];
+				case "New Icons":
+					if (FlxG.save.data.newicons == null)
+						FlxG.save.data.newicons = controlsStrings[curSelected].split(" || ")[2];
+				case "Icons":
+					if (FlxG.save.data.icons == null)
+						FlxG.save.data.icons = controlsStrings[curSelected].split(" || ")[2];
+				case "Info Bar BG":
+					if (FlxG.save.data.infobarbg == null)
+						FlxG.save.data.infobarbg = controlsStrings[curSelected].split(" || ")[2];
+				case "Countdown After Pause":
+					if (FlxG.save.data.countdownafterpause == null)
+						FlxG.save.data.countdownafterpause = controlsStrings[curSelected].split(" || ")[2];
+				case "Custom Scroll Speed":
+					if (FlxG.save.data.customscrollspeed == null)
+						FlxG.save.data.customscrollspeed = 0;
 				case "Change Note Theme":
-					if (!FlxG.save.data.enablemissanimations)
+					if (FlxG.save.data.notetheme == null)
 						FlxG.save.data.notetheme = "NOTE";
+				case "Max Optimization":
+					if (FlxG.save.data.maxoptimization == null) {
+						FlxG.save.data.maxoptimization = controlsStrings[curSelected].split(" || ")[2];
+					}
+				case "Quaver Bar":
+					if (FlxG.save.data.quaverbar == null) {
+						FlxG.save.data.quaverbar = controlsStrings[curSelected].split(" || ")[2];
+					}
+				case "Middle Scroll":
+					if (FlxG.save.data.middlescroll == null) {
+						FlxG.save.data.middlescroll = controlsStrings[curSelected].split(" || ")[2];
+					}
+				case "Charting Background":
+					if (FlxG.save.data.chartingbackground == null) {
+						FlxG.save.data.chartingbackground = controlsStrings[curSelected].split(" || ")[2];
+					}
+				case "Custom Offset":
+					if (FlxG.save.data.offset == null) {
+						FlxG.save.data.offset = 0;
+					}
 			}
+
+			// failsafe cuz stupid
+			if (FlxG.save.data.dadnotesdodamage == null)
+				FlxG.save.data.dadnotesdodamage = false;
+			if (FlxG.save.data.dadnotescankill == null)
+				FlxG.save.data.dadnotescankill = false;
+			if (FlxG.save.data.dadnotesvisible == null)
+				FlxG.save.data.dadnotesvisible = true;
+			if (FlxG.save.data.bfnotesvisible == null)
+				FlxG.save.data.bfnotesvisible = true;
+			if (FlxG.save.data.stunsblockinputs == null)
+				FlxG.save.data.stunsblockinputs = false;
+			if (FlxG.save.data.infobar == null)
+				FlxG.save.data.infobar = [];
+
 			FlxG.save.flush();
 
 			if (controlsStrings[i].indexOf('set') != -1)
@@ -111,6 +172,51 @@ class OptionsMenu extends MusicBeatState
 		//	openSubState(new OptionsSubState());
 	}
 
+	function getOption(name:String) {
+		switch (name)
+		{
+			case "Advanced Info Bar":
+				return FlxG.save.data.advancedinfobar;
+			case "Countdown After Pause":
+				return FlxG.save.data.countdownafterpause;
+			case "Downscroll":
+				// trace("Before: " + FlxG.save.data.downscroll);
+				return FlxG.save.data.downscroll;
+			// trace("After: " + FlxG.save.data.downscroll);
+			case "Ghost Tapping":
+				// trace("Before: " + FlxG.save.data.ghosttapping);
+				return FlxG.save.data.ghosttapping;
+			// trace("After: " + FlxG.save.data.ghosttapping);
+			case "Miss Shake":
+				return FlxG.save.data.missshake; // FlxG.save.data.dadnotesvisible
+			case "Dad Notes Visible":
+				return FlxG.save.data.dadnotesvisible;
+			case "Enable Miss Animations":
+				return FlxG.save.data.enablemissanimations;
+			case "Bot Play":
+				return FlxG.save.data.botplay;
+			case "Hit Sounds":
+				return FlxG.save.data.hitsounds;
+			case "New Icons":
+				return FlxG.save.data.newicons;
+			case "Info Bar BG":
+				return FlxG.save.data.infobarbg;
+			case "Max Optimization":
+				return FlxG.save.data.maxoptimization;
+			case "Middle Scroll":
+				return FlxG.save.data.middlescroll;
+			case "Charting Background":
+				return FlxG.save.data.chartingbackground;
+			case "Change Note Theme":
+				return FlxG.save.data.notetheme;
+			case "Custom Scroll Speed":
+				return FlxG.save.data.customscrollspeed;
+			case "Custom Offset":
+				return FlxG.save.data.offset;
+		}
+		return "None Found";
+	}
+	
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -118,9 +224,18 @@ class OptionsMenu extends MusicBeatState
 		if (controls.ACCEPT)
 		{
 			// hey, atleast its not yanderedev
-			// trace(controlsStrings[curSelected].substring(3).split(" || ")[0]);
-			switch (controlsStrings[curSelected].substring(3).split(" || ")[0])
+			 trace(controlsStrings[curSelected].substring(3).split(" || ")[0]);
+		switch (controlsStrings[curSelected].substring(3).split(" || ")[0])
 			{
+				case "Advanced Info Bar":
+					FlxG.save.data.advancedinfobar = !FlxG.save.data.advancedinfobar;
+					optionsText.text = FlxG.save.data.advancedinfobar;
+				case "Countdown After Pause":
+					FlxG.save.data.countdownafterpause = !FlxG.save.data.countdownafterpause;
+					optionsText.text = FlxG.save.data.countdownafterpause;
+				case "Optimized Notes":
+					FlxG.save.data.squarenotes = !FlxG.save.data.squarenotes;
+					optionsText.text = FlxG.save.data.squarenotes;
 				case "Downscroll":
 					// trace("Before: " + FlxG.save.data.downscroll);
 					FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
@@ -143,6 +258,30 @@ class OptionsMenu extends MusicBeatState
 				case "Bot Play":
 					FlxG.save.data.botplay = !FlxG.save.data.botplay;
 					optionsText.text = FlxG.save.data.botplay;
+				case "Hit Sounds":
+					FlxG.save.data.hitsounds = !FlxG.save.data.hitsounds;
+					optionsText.text = FlxG.save.data.hitsounds;
+				case "New Icons":
+					FlxG.save.data.newicons = !FlxG.save.data.newicons;
+					optionsText.text = FlxG.save.data.newicons;
+				case "Icons":
+					FlxG.save.data.icons = !FlxG.save.data.icons;
+					optionsText.text = FlxG.save.data.icons;
+				case "Info Bar BG":
+					FlxG.save.data.infobarbg = !FlxG.save.data.infobarbg;
+					optionsText.text = FlxG.save.data.infobarbg;
+				case "Quaver Bar":
+					FlxG.save.data.quaverbar = !FlxG.save.data.quaverbar;
+					optionsText.text = FlxG.save.data.quaverbar;
+				case "Max Optimization":
+					FlxG.save.data.maxoptimization = !FlxG.save.data.maxoptimization;
+					optionsText.text = FlxG.save.data.maxoptimization;
+				case "Middle Scroll":
+					FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
+					optionsText.text = FlxG.save.data.middlescroll;
+				case "Charting Background":
+					FlxG.save.data.chartingbackground = !FlxG.save.data.chartingbackground;
+					optionsText.text = FlxG.save.data.chartingbackground;
 				case "Change Note Theme":
 					noteselection++;
 					if (noteselection > notetypes.length - 1)
@@ -162,12 +301,55 @@ class OptionsMenu extends MusicBeatState
 					viewer.animation.addByPrefix('confirm', 'up confirm', 24, true);
 					viewer.animation.play('confirm');
 				//	trace(FlxG.save.data.notetheme);
-				default: // lol
+				case "Customize Keybinds":
 					OptionsMenu.instance.openSubState(new KeyBindMenu());
+				case "Modifiers":
+					FlxG.switchState(new ModifiersMenu());
+				case "Customize Info Bar": // lol
+					OptionsMenu.instance.openSubState(new InfoBarSubstate());
+				case "Time Your Offset": // lol
+					OptionsMenu.instance.openSubState(new OffsetCalculationSubState());
+				case "Custom Scroll Speed":
+					FlxG.save.data.customscrollspeed = 0;
+					optionsText.text = "0";
+				case "Custom Offset":
+					FlxG.save.data.offset = 0;
+					// haxe is monkey
+					//FlxG.save.data.offset = Math.fround(FlxG.save.data.offset);
+					optionsText.text = "0";
+				case "Reset":
+					reset();
 			}
+			//getOption(controlsStrings[curSelected].substring(3).split(" || ")[0]) = !getOption(controlsStrings[curSelected].substring(3).split(" || ")[0]);
 			FlxG.save.flush();
 			// this could be us but FlxG savedata sucks dick and im too lazy to see how kade engine did it
 			//	FlxG.save.data[controlsStrings[curSelected].split(" || ")[1]] = !FlxG.save.data.options[controlsStrings[curSelected].split(" || ")[1]];
+		}
+		if (controls.LEFT_P) {
+			switch (controlsStrings[curSelected].substring(3).split(" || ")[0]) {
+				case "Custom Scroll Speed":
+					if (FlxG.save.data.customscrollspeed > 0) {
+						FlxG.save.data.customscrollspeed -= 1;
+						optionsText.text = Std.string(FlxG.save.data.customscrollspeed / 10);
+					}
+				case "Custom Offset":
+					FlxG.save.data.offset -= 1;
+					// haxe is monkey
+					//FlxG.save.data.offset = Math.fround(FlxG.save.data.offset);
+					optionsText.text = Std.string(FlxG.save.data.offset / 10);
+			}
+		}
+		if (controls.RIGHT_P) {
+			switch (controlsStrings[curSelected].substring(3).split(" || ")[0]) {
+				case "Custom Scroll Speed":
+					FlxG.save.data.customscrollspeed += 1;
+					optionsText.text = Std.string(FlxG.save.data.customscrollspeed / 10);
+				case "Custom Offset":
+					FlxG.save.data.offset += 1;
+					// haxe is monkey
+					//FlxG.save.data.offset = Math.fround(FlxG.save.data.offset);
+					optionsText.text = Std.string(FlxG.save.data.offset / 10);
+			}
 		}
 		if (controls.BACK)
 			FlxG.switchState(new MainMenuState());
@@ -227,6 +409,22 @@ class OptionsMenu extends MusicBeatState
 				optionsText.text = FlxG.save.data.countdownafterpause;
 			case "Bot Play":
 				optionsText.text = FlxG.save.data.botplay;
+			case "Icons":
+				optionsText.text = FlxG.save.data.icons;
+			case "Hit Sounds":
+				optionsText.text = FlxG.save.data.hitsounds;
+			case "Max Optimization":
+				optionsText.text = FlxG.save.data.maxoptimization;
+			case "New Icons":
+				optionsText.text = FlxG.save.data.newicons;
+			case "Optimized Notes":
+				optionsText.text = FlxG.save.data.squarenotes;
+			case "Info Bar BG":
+				optionsText.text = FlxG.save.data.infobarbg;
+			case "Charting Background":
+				optionsText.text = FlxG.save.data.chartingbackground;
+			case "Quaver Bar":
+				optionsText.text = FlxG.save.data.quaverbar;
 			case "Change Note Theme":
 				if (FlxG.save.data.notetheme == "NOTE")
 				{
@@ -240,10 +438,21 @@ class OptionsMenu extends MusicBeatState
 				viewer.frames = Paths.getSparrowAtlas('notes/' + FlxG.save.data.notetheme + '_assets', 'shared');
 				viewer.animation.addByPrefix('static', 'arrowUP', 24, true);
 				viewer.animation.addByPrefix('confirm', 'up confirm', 24, false);
-				viewer.animation.play('static');
-			default: // lol im lazy
+				viewer.animation.play('confirm');
+			case "Customize Keybinds":
 				optionsText.text = "Press ENTER";
-				optionsDesc.text = "Customize the keys you use. (Up down left right)";
+			case "Custom Scroll Speed":
+				optionsText.text = Std.string(FlxG.save.data.customscrollspeed / 10);
+			default: // i am so lazy :LOOOOL I cant figure this out
+				optionsText.text = "Press ENTER";
+				optionsDesc.text = "Customize your info bar by adding modules.(WIP, DOES NOT WORK IF ADVANCED INFO TEXT IS OFF)";
+			case "Middle Scroll":
+				//FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll
+				optionsText.text = FlxG.save.data.middlescroll;
+			case "Custom Offset":
+				optionsText.text = Std.string(FlxG.save.data.offset / 10);
+			case "Time Your Offset":
+				optionsText.text = "Press ENTER";
 		}
 		// how did it take me this long to figure this out bruh (still applies here)
 		optionsDesc.text = controlsStrings[curSelected].split(" || ")[1];
@@ -264,5 +473,9 @@ class OptionsMenu extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+
+	function reset() {
+		
 	}
 }

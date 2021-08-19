@@ -6,15 +6,13 @@ import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.net.curl.CURLCode;
+import lime.app.Application;
 
 using StringTools;
 
@@ -31,15 +29,6 @@ class StoryMenuState extends MusicBeatState
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns']
-	];
-	var weekColors:Array<FlxColor> = [
-		0xFFca1f6f, // GF
-		0xFFc885e5, // DAD
-		0xFFf9a326, // SPOOKY
-		0xFFceec75, // PICO
-		0xFFec7aac, // MOM
-		0xFFffffff, // PARENTS-CHRISTMAS (Look I don't know what a Better color would be.)
-		0xFFffaa6f // SENPAI
 	];
 	var curDifficulty:Int = 1; // 0 = easy, 1 = normal, 2 = hard
 
@@ -127,7 +116,7 @@ class StoryMenuState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Selecting a Week", null);
+		DiscordClient.changePresence("Selecting a Week", "Version " + Application.current.meta.get('version'));
 		#end
 
 		for (i in 0...weekData.length)
@@ -230,6 +219,8 @@ class StoryMenuState extends MusicBeatState
 		updateText();
 
 		trace("Line 165");
+
+		changeWeek();
 
 		super.create();
 	}
@@ -379,6 +370,13 @@ class StoryMenuState extends MusicBeatState
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
 	}
 
+	override function beatHit() {
+		trace("beat");
+		grpWeekCharacters.members[0].animation.play(weekCharacters[curWeek][0]);
+		grpWeekCharacters.members[1].animation.play(weekCharacters[curWeek][1]);
+		grpWeekCharacters.members[2].animation.play(weekCharacters[curWeek][2]);
+		super.beatHit();
+	}
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
 
@@ -402,8 +400,8 @@ class StoryMenuState extends MusicBeatState
 				item.alpha = 0.6;
 			bullShit++;
 		}
-		FlxTween.color(txtTracklist, 0.1, txtTracklist.color, weekColors[curWeek]);
-		FlxTween.color(yellowBG, 0.1, yellowBG.color, weekColors[curWeek]); // not yellow anymore :sunglasses:
+		FlxTween.color(txtTracklist, 0.1, txtTracklist.color, Config.weekColors[curWeek]);
+		FlxTween.color(yellowBG, 0.1, yellowBG.color, Config.weekColors[curWeek]); // not yellow anymore :sunglasses:
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
